@@ -98,11 +98,6 @@ namespace MVC_01.Controllers
                 StatusMessage = "Khong co san pham";
                 return Redirect(Url.Action("Index", "Home"));
             }
-
-            // this.ViewData["product"] = product;
-            // ViewData["Title"] = "Hello";
-            // return View("ViewProduct2");
-            TempData["StatusMessage"] = "abcdefgh";
             ViewBag.product = product;
             return View("ViewProduct3");
         }

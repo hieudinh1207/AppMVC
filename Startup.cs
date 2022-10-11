@@ -1,15 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MVC_01.Models;
+using MVC_01.Services;
 
 namespace MVC_01
 {
@@ -29,14 +33,15 @@ namespace MVC_01
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.Configure<RazorViewEngineOptions>(options =>
-            {
-                //View/Controller/Action.cshtml
+            // services.Configure<RazorViewEngineOptions>(options =>
+            // {
+            //     //View/Controller/Action.cshtml
 
-                options.ViewLocationFormats.Add("/MyView/{1}/{0}" + RazorViewEngine.ViewExtension);
+            //     options.ViewLocationFormats.Add("/MyView/{1}/{0}" + RazorViewEngine.ViewExtension);
 
-            });
+            // });
             services.AddSingleton<ProductService>();
+            services.AddSingleton<PlanetService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +59,7 @@ namespace MVC_01
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseStatusCodePages();// code 400-> 599
 
             app.UseRouting();
 
@@ -61,11 +67,54 @@ namespace MVC_01
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGet("/sayhi", async (context) =>
+                {
+                    await context.Response.WriteAsync($"Hello ASP.NET MVC {DateTime.Now}");
+                });
+
+                endpoints.MapControllerRoute(
+                    name: "first",
+                    pattern: "{url}/{id?}",
+                    defaults: new
+                    {
+                        controller = "First",
+                        action = "ViewProduct"
+                    },
+                    constraints: new
+                    {
+                        url = new StringRouteConstraint("xemsanpham"),
+                        id = new RangeRouteConstraint(2, 4)
+                    }
+                );
+                endpoints.MapAreaControllerRoute(
+                    name: "ProductManage",
+                    pattern: "/{controller}/{action=Index}/{id?}",
+                    areaName: "ProductManage"
+                );
+                // endpoints.MapControllerRoute(
+                //    name: "firstroute",
+                //    pattern: "start-here/{controller = Home}/{action=Index}/{id?}"
+
+                // );
+                // endpoints.MapAreaControllerRoute(
+                //     name: "ProductManage",
+                //     pattern: "ProductManage/{controller}",
+                //     areaName: "ProductManage"
+                // );
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=First}/{action=Index}/{id?}");
+                    pattern: "/{controller=Home}/{action=Index}/{id?}"
+                );
+
                 endpoints.MapRazorPages();
             });
         }
     }
 }
+
+/* 
+Areas
+- là tên dùng để routing 
+
+
+ */
