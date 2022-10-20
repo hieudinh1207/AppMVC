@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -14,7 +15,9 @@ using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using MVC_01.Data;
 using MVC_01.Models;
 using MVC_01.Services;
 
@@ -34,6 +37,12 @@ namespace MVC_01
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions();
+            var mailsetting = Configuration.GetSection("MailSettings");
+            services.Configure<MailSettings>(mailsetting);
+            services.AddSingleton<IEmailSender, SendMailService>();
+
+
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddDbContext<AppDbContext>(options =>
@@ -50,8 +59,7 @@ namespace MVC_01
             // });
             services.AddSingleton<ProductService>();
             services.AddSingleton<PlanetService>();
-
-            services.AddDefaultIdentity<AppUser>()
+            services.AddIdentity<AppUser, IdentityRole>()
                          .AddEntityFrameworkStores<AppDbContext>()
                          .AddDefaultTokenProviders();
             services.Configure<IdentityOptions>(options =>
@@ -80,12 +88,20 @@ namespace MVC_01
 
             });
             services.AddOptions();
-            var mailsettings = Configuration.GetSection("MailSettings");  // đọc config
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/login";
                 options.LogoutPath = "/logout";
                 options.AccessDeniedPath = "/khongduoctruycap.html";
+            });
+            services.AddSingleton<IdentityErrorDescriber, AppIdentityErrorDescriber>();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ViewManageMenu", builder =>
+                {
+                    builder.RequireAuthenticatedUser();
+                    builder.RequireRole(RoleName.Administrator);
+                });
             });
 
         }
@@ -105,10 +121,18 @@ namespace MVC_01
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            // /contents/1
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "Uploads")
+                ),
+                RequestPath = "/contents"
+            });
             app.UseStatusCodePages();// code 400-> 599
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -137,6 +161,11 @@ namespace MVC_01
                     pattern: "/{controller}/{action=Index}/{id?}",
                     areaName: "ProductManage"
                 );
+                endpoints.MapAreaControllerRoute(
+               name: "Files",
+               pattern: "/{controller}/{action=Index}/{id?}",
+               areaName: "Files"
+           );
                 // endpoints.MapControllerRoute(
                 //    name: "firstroute",
                 //    pattern: "start-here/{controller = Home}/{action=Index}/{id?}"
@@ -162,5 +191,5 @@ namespace MVC_01
 Areas
 - là tên dùng để routing 
 
-
+dotnet aspnet-codegenerator controller -name FileManagerController --relativeFolderPath Areas\Files\Controllers
  */

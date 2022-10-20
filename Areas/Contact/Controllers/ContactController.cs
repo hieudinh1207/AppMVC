@@ -6,12 +6,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using MVC_01.Data;
 using MVC_01.Models;
 using ContacModel = MVC_01.Models.Contacts.Contact;
 
 namespace MVC_01.Areas.Contact.ContactController
 {
     [Area("Contact")]
+    [Authorize(Roles = RoleName.Administrator)]
     public class ContactController : Controller
     {
         private readonly AppDbContext _context;
@@ -21,8 +23,8 @@ namespace MVC_01.Areas.Contact.ContactController
             _context = context;
         }
 
-        // GET: Contact/Contact
-        [Route("admin/contact")]
+        //     // GET: Contact/Contact
+        [HttpGet("/admin/contact")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Contacts.ToListAsync());
@@ -101,7 +103,7 @@ namespace MVC_01.Areas.Contact.ContactController
             return View(contact);
         }
 
-        // POST: Contact/Contact/Delete/5
+        // // POST: Contact/Contact/Delete/5
         [HttpPost("admin/contact/delete/{id}"), ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -114,3 +116,6 @@ namespace MVC_01.Areas.Contact.ContactController
 
     }
 }
+
+/// dotnet aspnet-codegenerator controller -name PostController -m MVC_01.Models.Blog.Post -outDir Areas\Blog\Controllers -namespace MVC_01.Areas.Blog.Controllers -dc MVC_01.Models.AppDbContext --useDefaultLayout 
+//-namespace MVC_01.Areas.Blog.Controllers -dc MVC_01.Models.AppDbContext --useDefaultLayout 

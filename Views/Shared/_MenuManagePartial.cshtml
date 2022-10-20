@@ -1,10 +1,40 @@
-<div class="dropdown">
-    <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" href="">
-        Manage
-    </button>
-    <ul class="dropdown-menu">
-        <li><a class="dropdown-item" asp-action="Index" asp-controller="DbManage" asp-area="Database">Database</a></li>
-        <li><a class="dropdown-item" asp-action="Index" asp-controller="Contact" asp-area="Contact">Quản lý liên hệ</a>
-        </li>
-    </ul>
-</div>
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService authorizationService
+
+@{
+    var result = await authorizationService.AuthorizeAsync(this.User, "ViewManageMenu");
+}
+
+@if (@result.Succeeded)
+{
+    <div class="dropdown">
+        <button type="button" class="btn btn-outline-danger dropdown-toggle" data-toggle="dropdown" href="">
+            <i class="fas fa-cog"></i>
+            Manage
+        </button>
+        <ul class="dropdown-menu dropdown-menu-right">
+            <li><a class="dropdown-item" asp-action="Index" asp-controller="DbManage" asp-area="Database">Database</a></li>
+            <li><a class="dropdown-item" asp-action="Index" asp-controller="Contact" asp-area="Contact">Quản lý liên hệ</a>
+            </li>
+            <li><a class="dropdown-item" asp-action="Index" asp-controller="Role" asp-area="Identity">Quản lý role(vai
+                    trò)</a>
+            </li>
+            <li><a class="dropdown-item" asp-action="Index" asp-controller="User" asp-area="Identity">Quản lý thành
+                    viên</a>
+            </li>
+            <li><a class="dropdown-item" asp-action="Index" asp-controller="Category" asp-area="Blog">Quản lý chuyên mục của
+                    Blog
+                </a>
+            </li>
+            <li><a class="dropdown-item" asp-action="Index" asp-controller="Post" asp-area="Blog">Quản lý bài viết của
+                    Blog
+                </a>
+            </li>
+            <li><a target="_blank" class="dropdown-item" asp-action="Index" asp-controller="FileManager"
+                asp-area="Files">Quản lý files
+
+                </a>
+            </li>
+        </ul>
+    </div>
+}

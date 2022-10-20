@@ -1,0 +1,15 @@
+@using MVC_01.Components
+@{
+    List<Category> categories = ViewBag.categories as List<Category>;
+    var categoryslug = ViewBag.categoryslug as string;
+}
+Đây là nội dung chuyên mục
+
+@section Sidebar{
+@await Component.InvokeAsync("MVC_01.Components.CategorySidebar",
+new CategorySidebar.CategorySidebarData(){
+Categories=categories,
+level=0,
+categoryslug=categoryslug
+})
+}
