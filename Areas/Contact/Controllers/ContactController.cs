@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using MVC_01.Components;
 using MVC_01.Data;
 using MVC_01.Models;
 using ContacModel = MVC_01.Models.Contacts.Contact;
@@ -50,7 +51,7 @@ namespace MVC_01.Areas.Contact.ContactController
         }
 
         // GET: Contact/Contact/
-        [HttpGet("/contact/")]
+        //[HttpGet("/contact/")]
         [AllowAnonymous]
         public IActionResult SendContact()
         {
@@ -71,11 +72,19 @@ namespace MVC_01.Areas.Contact.ContactController
                 contact.DateSent = DateTime.Now;
                 _context.Add(contact);
                 await _context.SaveChangesAsync();
-                StatusMessage = "Liên hệ của bạn đã được gửi";
-                return RedirectToAction("Index", "Home");
+                //StatusMessage = "Liên hệ của bạn đã được gửi";
+                var username = contact.FullName;
+                var message = new MessagePage.Message();
+                message.title ="Thông báo";
+                message.htmlcontent = $"Cảm ơn {username} đã đóng góp ý kiến...Love you!";
+                message.secondwait = 7;
+                message.urlredirect = Url.Action("Index","Home");
+                return ViewComponent("MessagePage",message);
             }
             return View(contact);
         }
+
+
 
         // GET: Contact/Contact/Edit/5
 

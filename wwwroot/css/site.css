@@ -15,6 +15,11 @@ body {
   margin-bottom: 60px;
 }
 
+img {
+  width: auto;
+  height: auto;
+}
+
 .footer {
   position: absolute;
   bottom: 0;
@@ -25,7 +30,7 @@ body {
 }
 
 .app-navbar {
-  background: #122153;
+  background: #4e73df;
 }
 .app-navbar .text-dark {
   color: #b9c3ce !important;
@@ -35,6 +40,8 @@ body {
 }
 .app-navbar .navbar-brand {
   color: #fff;
+  font-family: cursive;
+  font-size: 35px;
 }
 .app-navbar .navbar-brand:hover {
   color: #888188 !important;
@@ -76,9 +83,9 @@ h4 {
   margin-top: 20px;
 }
 
-img {
+/* img {
   width: 100px;
-}
+} */
 
 .formcontact label {
   font-weight: 700;
@@ -88,7 +95,7 @@ img {
 }
 
 .app-footer {
-  background-color: #080A10;
+  background-color: #4e73df;
   color: white;
   text-align: center;
 }

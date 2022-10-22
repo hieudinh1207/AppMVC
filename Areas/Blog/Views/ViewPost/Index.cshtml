@@ -1,15 +1,66 @@
 @using MVC_01.Components
+@model List<Post>
 @{
     List<Category> categories = ViewBag.categories as List<Category>;
-    var categoryslug = ViewBag.categoryslug as string;
+    var category = ViewBag.category as Category;
+    ViewData["Title"] = (category != null)? @category.Title: "Tất cả bài viết";
+   
 }
-Đây là nội dung chuyên mục
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="~/">Home</a></li>
+    @if(category!=null)
+    {
+        var li = category.ListParents();
+        foreach(var l in li)
+        {
+            <li class="breadcrumb-item">
+                <a asp-action="Index" asp-route-categoryslug ="@l.Slug">@l.Title</a>
+            </li>
+        }
+    }
+  </ol>
+</nav>
+
+<h1>@ViewData["Title"]</h1>
+@if(category !=null)
+{
+    @Html.Raw(@category.Description)
+}
+else{
+
+}
+
+<hr>
+@foreach (var post in Model)
+{
+    <div class="media mb-3 pd-3 border-bottom" >
+        <img class="mr-3 w-25" src="/contents/No_Image_Available.jpg" alt="Generic placeholder image">
+        <div class="media-body">
+            <a asp-controller="ViewPost" asp-action ="Detail" asp-route-postslug ="@post.Slug"> <h5 class="mt-0">@post.Title</h5></a>
+            <p>@post.Description</p> 
+            <div class="text-danger">
+                Chủ đề: <strong>@post.PostCategories.FirstOrDefault()?.Category.Title</strong>
+            </div>
+            <div class="author-row">
+                Tác giả : <strong>@post.Author</strong> |
+                Ngày cập nhật : <i>@post.DateUpdated.ToShortDateString()</i>
+            </div>
+        </div>
+    </div>
+
+}
 
 @section Sidebar{
 @await Component.InvokeAsync("MVC_01.Components.CategorySidebar",
-new CategorySidebar.CategorySidebarData(){
-Categories=categories,
-level=0,
-categoryslug=categoryslug
-})
+            new CategorySidebar.CategorySidebarData(){
+            Categories=categories,
+            level=0,
+            categoryslug = @ViewBag.categoryslug
+        })
 }
+@{
+    var paddingmodel = ViewData["padingmodel"];
+}
+<partial name="_PagingXTL" model="paddingmodel"></partial>

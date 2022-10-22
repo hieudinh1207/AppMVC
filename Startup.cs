@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using MVC_01.Data;
+using MVC_01.Menu;
 using MVC_01.Models;
 using MVC_01.Services;
 
@@ -103,6 +105,20 @@ namespace MVC_01
                     builder.RequireRole(RoleName.Administrator);
                 });
             });
+               services.AddSingleton<IdentityErrorDescriber, AppIdentityErrorDescriber>();
+
+                services.AddAuthorization(options => {
+                    options.AddPolicy("ViewManageMenu", builder => {
+                        builder.RequireAuthenticatedUser();
+                        builder.RequireRole(RoleName.Administrator);
+                    });
+                });
+
+
+
+                services.AddTransient<IActionContextAccessor, ActionContextAccessor>();
+                services.AddTransient<AdminSidebarService>();
+
 
         }
 
@@ -160,6 +176,11 @@ namespace MVC_01
                     name: "ProductManage",
                     pattern: "/{controller}/{action=Index}/{id?}",
                     areaName: "ProductManage"
+                );
+                endpoints.MapAreaControllerRoute(
+                    name: "Contact",
+                    pattern: "/{controller}/{action=Index}/{id?}",
+                    areaName: "Contact"
                 );
                 endpoints.MapAreaControllerRoute(
                name: "Files",

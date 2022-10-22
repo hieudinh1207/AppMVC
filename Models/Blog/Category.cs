@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace MVC_01.Models.Blog
 {
@@ -41,6 +42,32 @@ namespace MVC_01.Models.Blog
 
 
         public Category ParentCategory { set; get; }
+ 
 
+        public void ChildCategoryIDs(ICollection<Category> childcates = null, List<int> lists =null)
+        {
+            if(childcates == null)
+            {
+                childcates = this.CategoryChildren;
+            }
+             
+            foreach(var childcategory in childcates)
+            {
+                lists.Add(childcategory.Id);
+                ChildCategoryIDs(childcategory.CategoryChildren,lists);
+            }
+        }
+        public List<Category> ListParents()
+        {
+            List<Category> li = new List<Category>();
+            var parent = this.ParentCategory;
+            while(parent != null)
+            {
+                li.Add(parent);
+                parent = parent.ParentCategory;
+            }
+            li.Reverse();
+            return li;
+        }
     }
 }

@@ -19,16 +19,16 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3 app-navbar">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Blog</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Beauty Blog</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-sm-inline-flex bd-highlight  justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+                        @* <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
+                        </li> *@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Blog" asp-controller="ViewPost"
                                 asp-action="Index">Blog</a>
@@ -37,12 +37,12 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home"
                                 asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
+                        @* <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Planet"
                                 asp-action="Index">Planet</a>
-                        </li>
+                        </li> *@
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Contact" asp-action="contact">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="contact" asp-action="SendContact">
                                 <i class="fas fa-phone-alt"></i>
                                 Liên
                                 hệ</a>
@@ -62,8 +62,8 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted app-footer">
-        <div class="container">
+    <footer class="border-top footer text-muted app-footer ">
+        <div class="container text-white">
             &copy; 2022 - MVC_01 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>

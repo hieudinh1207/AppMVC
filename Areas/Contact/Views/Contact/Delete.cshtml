@@ -1,14 +1,15 @@
 @model MVC_01.Models.Contacts.Contact
-
+@using MVC_01.Menu
+@inject AdminSidebarService _AdminSidebarService
 @{
     ViewData["Title"] = "Xóa liên hệ";
+    Layout="/Views/Shared/_LayoutAdmin.cshtml";
+
 }
 
-<h1>@ViewData["Title"]</h1>
 
 <h3>Có chắc chắn xóa liên hệ ?</h3>
 <div>
-    <h4>Contact</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -48,4 +49,13 @@
         <input type="submit" value="Xóa" class="btn btn-danger" /> |
         <a asp-action="Index">Danh sách liên hệ</a>
     </form>
-</div>
+
+
+@{
+    _AdminSidebarService.SetActive("Contact", "Index", "Contact");
+}
+
+@section Sidebar
+{
+    @Html.Raw(_AdminSidebarService.renderHtml())
+}

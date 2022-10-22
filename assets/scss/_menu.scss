@@ -1,49 +1,50 @@
 .app-navbar {
-    background: #122153;
+  background: #4e73df;
 
-    .text-dark {
-        color: #b9c3ce !important;
+  .text-dark {
+    color: #b9c3ce !important;
 
-        &:hover {
-            color: white !important;
-        }
+    &:hover {
+      color: white !important;
     }
+  }
 
-    .navbar-brand {
-        color: #fff;
+  .navbar-brand {
+    color: #fff;
+    font-family: cursive;
+    font-size: 35px;
 
-        &:hover {
-            color: #888188 !important;
-        }
+    &:hover {
+      color: #888188 !important;
     }
+  }
 
-    .dropdown-toggle {
-        border-color: transparent !important;
-        color: white;
-    }
+  .dropdown-toggle {
+    border-color: transparent !important;
+    color: white;
+  }
 }
 
 .categorysidebar {
+  ul,
+  li {
+    list-style: none;
+    padding-left: 10px;
+  }
 
-    ul,
-    li {
-        list-style: none;
-        padding-left: 10px;
+  a {
+    text-decoration: none;
+
+    &:hover {
+      color: #a04747;
     }
 
-    a {
-        text-decoration: none;
-
-        &:hover {
-            color: #a04747;
-        }
-
-        &.active {
-            color: red;
-        }
+    &.active {
+      color: red;
     }
+  }
 
-    >ul>li>a {
-        font-weight: bold;
-    }
+  > ul > li > a {
+    font-weight: bold;
+  }
 }
