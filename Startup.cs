@@ -214,3 +214,4 @@ Areas
 
 dotnet aspnet-codegenerator controller -name FileManagerController --relativeFolderPath Areas\Files\Controllers
  */
+ //test
