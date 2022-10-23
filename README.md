@@ -1,1 +1,1 @@
-# AppMVC
+# Beauty Blog
