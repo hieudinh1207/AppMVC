@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MVC_01.Models.Blog;
 using MVC_01.Models.Contacts;
-
+using MVC_01.Models.Product;
 
 namespace MVC_01.Models
 {
@@ -38,11 +38,19 @@ namespace MVC_01.Models
             });
             modelBuilder.Entity<PostCategory>(entity =>
             {
-                entity.HasKey(c => new { c.PostID, c.CategoryID });
+                entity.HasKey(c => (new { c.PostID, c.CategoryID }));
             });
             modelBuilder.Entity<Post>(entity =>
             {
                 entity.HasIndex(c => c.Slug).IsUnique();
+            });
+                   modelBuilder.Entity<ProductModel>(entity =>
+            {
+                entity.HasIndex(c => c.Slug).IsUnique();
+            });
+               modelBuilder.Entity<Product.ProductCategoryProduct>(entity =>
+            {
+                entity.HasKey(c => (new { c.ProductID, c.CategoryID }));
             });
 
         }
@@ -50,6 +58,11 @@ namespace MVC_01.Models
         public DbSet<Category> Categories { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<PostCategory> PostCategories { get; set; }
+        public DbSet<ProductModel> Products {get;set;}
+        public DbSet<ProductCategoryProduct>  ProductCategoryProducts{get;set;}
+        public DbSet<CategoryProduct> CategoryProducts{get;set;}
+        public DbSet<ProductPhoto> ProductPhotos {get;set;}
+        public DbSet<PostPhoto> PostPhotos {get;set;}
     }
 }
 

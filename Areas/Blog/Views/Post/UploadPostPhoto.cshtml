@@ -1,0 +1,48 @@
+<h1>Uploads</h1>
+@model MVC_01.Areas.Blog.PostController.UploadOneFile
+@{
+    Post post = ViewData["post"] as Post;
+}
+<partial name="_StatusMessage"></partial>
+<form method="post" enctype="multipart/form-data" asp-action ="UploadPostPhoto">
+<div>
+    <label asp-for="@Model.UploadFile"></label>
+    <input asp-for="@Model.UploadFile" type="file" />
+</div>
+<div>
+    <button type="submit" asp-action="UploadPostPhoto" class="btn btn-primary">Upload File</button>
+</div>
+
+</form>
+<hr>
+
+@if(post.PostPhotos.Count >0)
+{
+    <div id ="box-photo-upload" class="d-flex flex-wrap photo-upload" data-id="@post.PostId" >
+    @* @foreach(var i in post.PostPhotos)
+    {
+        <img class="w-100" src="/contents/Posts/@i.FileName" alt="Card image cap">
+    } *@
+     </div>
+}
+
+@section Scripts
+{
+    <script>
+        function loadPostPhotos()
+        {
+            var box = $("#box-photo-upload");
+            var postid = box.data("id");
+            @* console.log(postid); *@
+            $.ajax({
+                
+            })
+
+        }
+
+
+        $(document).ready(function(){
+            loadPostPhotos();
+        })
+    </script>
+}

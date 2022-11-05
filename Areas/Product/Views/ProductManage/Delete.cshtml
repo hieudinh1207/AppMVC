@@ -1,0 +1,37 @@
+@model MVC_01.Models.Product.ProductModel
+@using MVC_01.Menu
+@inject AdminSidebarService _AdminSidebarService
+@{
+    ViewData["Title"] = "Xóa sản phẩm";
+    //Layout="/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+
+<h3>Bạn có chắc chắn xóa sản phẩm không?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ProductId" />
+        <input type="submit" value="Xóa" class="btn btn-danger" /> |
+        <a asp-action="Index">Danh sách sản phẩm</a>
+    </form>
+</div>
+@* @{
+    _AdminSidebarService.SetActive("Post", "Create", "Blog");
+}
+
+@section Sidebar
+{
+    @Html.Raw(_AdminSidebarService.renderHtml())
+} *@

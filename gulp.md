@@ -1,1 +1,2 @@
 npm update
+gulp watch

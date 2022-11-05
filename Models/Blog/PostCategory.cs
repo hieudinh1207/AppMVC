@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using MVC_01.Models.Product;
 
 namespace MVC_01.Models.Blog
 {
@@ -14,5 +15,6 @@ namespace MVC_01.Models.Blog
 
         [ForeignKey("CategoryID")]
         public Category Category { set; get; }
+        public ProductModel Product { get; internal set; }
     }
 }

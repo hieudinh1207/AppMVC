@@ -83,9 +83,9 @@ h4 {
   margin-top: 20px;
 }
 
-/* img {
+img {
   width: 100px;
-} */
+}
 
 .formcontact label {
   font-weight: 700;
@@ -98,4 +98,17 @@ h4 {
   background-color: #4e73df;
   color: white;
   text-align: center;
+}
+
+.photodetail {
+  position: relative;
+}
+.photodetail span {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  display: none;
+}
+.photodetail:hover span {
+  display: block;
 }

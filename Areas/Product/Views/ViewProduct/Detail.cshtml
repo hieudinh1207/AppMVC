@@ -1,0 +1,81 @@
+@model ProductModel
+@using MVC_01.Components
+@{
+    List<CategoryProduct> categories = ViewBag.categories as List<CategoryProduct>;
+    var product = ViewBag.product as ProductModel;
+    CategoryProduct category = ViewBag.category as CategoryProduct;
+    List<ProductModel> otherProducts = ViewBag.otherProducts as List<ProductModel>;
+    ViewData["Title"] = @Model.Title;
+
+}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="~/">Home</a></li>
+    @if(category!=null)
+    {
+        var li = category.ListParents();
+        foreach(var l in li)
+        {
+            <li class="breadcrumb-item">
+                <a asp-action="Index" asp-route-categoryslug ="@l.Slug">@l.Title</a>
+            </li>
+             <li class="breadcrumb-item">
+                <a asp-action="Index" asp-route-categoryslug ="@category.Slug">@l.Title</a>
+            </li>
+        }
+    }
+  </ol>
+</nav>
+<h1> @ViewData["Title"]</h1>
+<div class="detailpost">
+<div class="sapo">
+    @Model.Description
+</div>
+<div>
+    <p>
+        Giá: <strong>@Model.Price</strong>
+        <a asp-action="AddToCart" asp-route-productid="@Model.ProductId" class="btn btn-danger">Đặt hàng</a>
+    </p>
+</div>
+<div>
+    <i>Cập nhật: @Model.DateUpdated</i>
+    Tác giả: <strong>@Model.Author.UserName</strong>
+</div>
+@if(Model.Photos.Any())
+{
+    <div class="d-flex flex-wrap">
+        @foreach (var photo in Model.Photos)
+        {
+            <img class = "w-50" src="/contents/Products/@photo.FileName" />
+        }
+
+    </div>
+}
+<hr>
+@Html.Raw(Model.Content)
+</div>
+
+@if(product !=null)
+{
+    <p>product.Content</p>
+}
+
+
+@section Sidebar{
+@await Component.InvokeAsync("MVC_01.Components.CategoryProductSidebar",
+            new CategoryProductSidebar.CategorySidebarData(){
+            Categories=categories,
+            level=0,
+            categoryslug = category.Slug
+        })
+        <ul class="list-group">
+@foreach (var other in otherProducts)
+{
+    <li class="list-group-item">
+        <a asp-controller="ViewProduct" asp-action ="Detail"  asp-route-productslug = "@other.Slug">
+@other.Title
+        </a>
+    </li>
+}
+</ul>
+}

@@ -41,6 +41,7 @@ namespace MVC_01.Models.Blog
 
         [Display(Name = "Ngày cập nhật")]
         public DateTime DateUpdated { set; get; }
+        public ICollection<PostPhoto> PostPhotos{get;set;}
 
     }
 }

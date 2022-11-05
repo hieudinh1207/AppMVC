@@ -26,29 +26,25 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex bd-highlight  justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        @* <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li> *@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Blog" asp-controller="ViewPost"
                                 asp-action="Index">Blog</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="Product" asp-controller="ViewProduct"
+                                asp-action="Index">Sản phẩm</a>
                         </li>
-                        @* <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Planet"
-                                asp-action="Index">Planet</a>
-                        </li> *@
+                    
+                     
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="contact" asp-action="SendContact">
                                 <i class="fas fa-phone-alt"></i>
                                 Liên
                                 hệ</a>
-                        </li>
+                       
 
                     </ul>
+                    @await Html.PartialAsync("_CartPartial")
                     <partial name="_LoginPartial"></partial>
                     <partial name="_MenuManagePartial" />
 

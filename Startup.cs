@@ -19,6 +19,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using MVC_01.Data;
+using MVC_01.ExtendMethods;
 using MVC_01.Menu;
 using MVC_01.Models;
 using MVC_01.Services;
@@ -39,6 +40,11 @@ namespace MVC_01
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDistributedMemoryCache();           // Đăng ký dịch vụ lưu cache trong bộ nhớ (Session sẽ sử dụng nó)
+            services.AddSession(cfg => {                    // Đăng ký dịch vụ Session
+                cfg.Cookie.Name = "dinhthiminhhieu";             // Đặt tên Session - tên này sử dụng ở Browser (Cookie)
+                cfg.IdleTimeout = new TimeSpan(0,30, 0);    // Thời gian tồn tại của Session
+            });
             services.AddOptions();
             var mailsetting = Configuration.GetSection("MailSettings");
             services.Configure<MailSettings>(mailsetting);
@@ -52,15 +58,8 @@ namespace MVC_01
                 string connectString = Configuration.GetConnectionString("AppDbContext");
                 options.UseSqlServer(connectString);
             });
-            // services.Configure<RazorViewEngineOptions>(options =>
-            // {
-            //     //View/Controller/Action.cshtml
-
-            //     options.ViewLocationFormats.Add("/MyView/{1}/{0}" + RazorViewEngine.ViewExtension);
-
-            // });
-            services.AddSingleton<ProductService>();
-            services.AddSingleton<PlanetService>();
+    
+   
             services.AddIdentity<AppUser, IdentityRole>()
                          .AddEntityFrameworkStores<AppDbContext>()
                          .AddDefaultTokenProviders();
@@ -105,20 +104,9 @@ namespace MVC_01
                     builder.RequireRole(RoleName.Administrator);
                 });
             });
-               services.AddSingleton<IdentityErrorDescriber, AppIdentityErrorDescriber>();
-
-                services.AddAuthorization(options => {
-                    options.AddPolicy("ViewManageMenu", builder => {
-                        builder.RequireAuthenticatedUser();
-                        builder.RequireRole(RoleName.Administrator);
-                    });
-                });
-
-
-
-                services.AddTransient<IActionContextAccessor, ActionContextAccessor>();
-                services.AddTransient<AdminSidebarService>();
-
+            services.AddTransient<IActionContextAccessor, ActionContextAccessor>();
+            services.AddTransient<AdminSidebarService>();
+            services.AddTransient<CartService>();
 
         }
 
@@ -132,11 +120,11 @@ namespace MVC_01
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            
             // /contents/1
             app.UseStaticFiles(new StaticFileOptions()
             {
@@ -145,7 +133,8 @@ namespace MVC_01
                 ),
                 RequestPath = "/contents"
             });
-            app.UseStatusCodePages();// code 400-> 599
+            app.UseSession();
+            app.AddStatusCodePage();// code 400-> 599
 
             app.UseRouting();
             app.UseAuthentication();
@@ -153,11 +142,6 @@ namespace MVC_01
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/sayhi", async (context) =>
-                {
-                    await context.Response.WriteAsync($"Hello ASP.NET MVC {DateTime.Now}");
-                });
-
                 endpoints.MapControllerRoute(
                     name: "first",
                     pattern: "{url}/{id?}",
@@ -183,20 +167,10 @@ namespace MVC_01
                     areaName: "Contact"
                 );
                 endpoints.MapAreaControllerRoute(
-               name: "Files",
-               pattern: "/{controller}/{action=Index}/{id?}",
-               areaName: "Files"
-           );
-                // endpoints.MapControllerRoute(
-                //    name: "firstroute",
-                //    pattern: "start-here/{controller = Home}/{action=Index}/{id?}"
-
-                // );
-                // endpoints.MapAreaControllerRoute(
-                //     name: "ProductManage",
-                //     pattern: "ProductManage/{controller}",
-                //     areaName: "ProductManage"
-                // );
+                    name: "Files",
+                    pattern: "/{controller}/{action=Index}/{id?}",
+                    areaName: "Files"
+                );
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "/{controller=Home}/{action=Index}/{id?}"
@@ -214,4 +188,4 @@ Areas
 
 dotnet aspnet-codegenerator controller -name FileManagerController --relativeFolderPath Areas\Files\Controllers
  */
- //test
+ 

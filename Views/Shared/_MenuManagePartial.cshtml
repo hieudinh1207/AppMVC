@@ -14,7 +14,10 @@
 @if (@result.Succeeded)
 {
     <div class="dropdown">
-     
+       <a class="btn btn-outline-danger dropdown-toggle" href="#"
+            id="managedropdownmenu" data-toggle="dropdown">
+            Manage
+        </a>
         <ul class="dropdown-menu dropdown-menu-right">
             <li><a class="dropdown-item" asp-action="Index" asp-controller="DbManage" asp-area="Database">Database</a></li>
             <li><a class="dropdown-item" asp-action="Index" asp-controller="Contact" asp-area="Contact">Quản lý liên hệ</a>
@@ -31,6 +34,13 @@
             </li>
             <li><a class="dropdown-item" asp-action="Index" asp-controller="Post" asp-area="Blog">Quản lý bài viết của
                     Blog
+                </a>
+            </li>
+                  <li><a class="dropdown-item" asp-action="Index" asp-controller="CategoryProduct" asp-area="Product">Quản lý chuyên mục sản phẩm
+                </a>
+            </li>
+             <li>
+                  <li><a class="dropdown-item" asp-action="Index" asp-controller="ProductManage" asp-area="Product">Quản lý sản phẩm
                 </a>
             </li>
             <li><a target="_blank" class="dropdown-item" asp-action="Index" asp-controller="FileManager"
