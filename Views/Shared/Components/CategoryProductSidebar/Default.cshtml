@@ -1,5 +1,5 @@
 @using MVC_01.Components
-@model MVC_01.Components.CategoryProductSidebar.CategorySidebarData
+@model MVC_01.Components.CategoryProductSidebar.CategoryProductSidebarData
 @{
     int level = Model.level;
 }
@@ -9,7 +9,7 @@
     {
         @Html.Raw("<div class=\"categorysidebar\">")
         ;
-        <h3><a asp-controller="ViewPost" asp-action="Index" asp-route-categoryslug="">
+        <h3><a asp-controller="ViewProduct" asp-action="Index" asp-route-categoryproductslug="">
                 Các danh mục sản phẩm
             </a></h3>
     }
@@ -18,17 +18,17 @@
         {
             var cssActive = (category.Slug == Model.categoryslug) ? "active" : null;
             <li>
-                <a class="@cssActive" asp-controller="ViewPost" asp-action="Index" asp-route-categoryslug="@category.Slug">
+                <a class="@cssActive" asp-controller="ViewProduct" asp-action="Index" asp-route-categoryproductslug="@category.Slug">
                     @category.Title
                 </a>
                 @if (category.CategoryChildren?.Count > 0)
                 {
                     @await Component.InvokeAsync("MVC_01.Components.CategoryProductSidebar",
-        new CategoryProductSidebar.CategorySidebarData(){
-        Categories= category.CategoryChildren.ToList(),
-        level=level +1,
-        categoryslug=ViewBag.categoryslug
-        })
+                new CategoryProductSidebar.CategoryProductSidebarData(){
+                Categories= category.CategoryChildren.ToList(),
+                level=level +1,
+                categoryslug=ViewBag.categoryslug
+                })
                 }
             </li>
         }

@@ -172,5 +172,9 @@ namespace MVC_01.Areas.Product
             // Trả về mã thành công (không có nội dung gì - chỉ để Ajax gọi)
             return Ok();
         }
+        public string Checkout()
+        {
+            return "Đơn hàng được gửi thành công";
+        }
     }
 }

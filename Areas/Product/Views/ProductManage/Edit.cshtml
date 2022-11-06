@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = "Cập nhật sản phẩm";
     var list = ViewData["categories"] as MultiSelectList;
-    //Layout="/Views/Shared/_LayoutAdmin.cshtml";
+    Layout="/Views/Shared/_LayoutAdmin.cshtml";
 
 }
 
@@ -192,11 +192,11 @@
     };
 }
 <partial name="_Summernote" model="@summernote"></partial>
-@* @{
+@{
     _AdminSidebarService.SetActive("Post", "Create", "Blog");
 }
 
 @section Sidebar
 {
     @Html.Raw(_AdminSidebarService.renderHtml())
-} *@
+}

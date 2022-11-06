@@ -1,10 +1,10 @@
 @using MVC_01.Models.Product
 @model IEnumerable<MVC_01.Models.Product.CategoryProduct>
-@* @using MVC_01.Menu
-@inject AdminSidebarService _AdminSidebarService *@
+@using MVC_01.Menu
+@inject AdminSidebarService _AdminSidebarService 
 @{
     ViewData["Title"] = "Chuyên mục sản phẩm";
-    //Layout="/Views/Shared/_LayoutAdmin.cshtml";
+    Layout="/Views/Shared/_LayoutAdmin.cshtml";
 
 }
 
@@ -60,11 +60,11 @@
         }
     }
 }
-@* @{
+@{
     _AdminSidebarService.SetActive("Category", "Create", "Blog");
 }
 
 @section Sidebar
 {
     @Html.Raw(_AdminSidebarService.renderHtml())
-} *@
+}

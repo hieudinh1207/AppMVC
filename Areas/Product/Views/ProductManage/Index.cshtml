@@ -3,7 +3,7 @@
 @inject AdminSidebarService _AdminSidebarService
 @{
     ViewData["Title"] = "Danh sách sản phẩm";
-    //Layout="/Views/Shared/_LayoutAdmin.cshtml";
+    Layout="/Views/Shared/_LayoutAdmin.cshtml";
 
 }
 
@@ -75,11 +75,11 @@
     </tbody>
 </table>
 <partial name="_PagingXTL" model="@ViewBag.pagingmodel"></partial>
-@* @{
+@{
     _AdminSidebarService.SetActive("Post", "Create", "Blog");
 }
 
 @section Sidebar
 {
     @Html.Raw(_AdminSidebarService.renderHtml())
-} *@
+}

@@ -3,7 +3,7 @@
 @inject AdminSidebarService _AdminSidebarService
 @{
     ViewData["Title"] = @Model.Title;
-    //Layout="/Views/Shared/_LayoutAdmin.cshtml";
+    Layout="/Views/Shared/_LayoutAdmin.cshtml";
 
 }
 
@@ -66,11 +66,11 @@
     <a asp-action="Edit" asp-route-id="@Model.ProductId">Sửa</a> |
     <a asp-action="Index">Các sản phẩm</a>
 </div>
-@* @{
+@{
     _AdminSidebarService.SetActive("Post", "Create", "Blog");
 }
 
 @section Sidebar
 {
     @Html.Raw(_AdminSidebarService.renderHtml())
-} *@
+}

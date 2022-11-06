@@ -1,12 +1,11 @@
 @model MVC_01.Models.Product.CategoryProduct
-@* @using MVC_01.Menu *@
-@* @inject AdminSidebarService _AdminSidebarService *@
+@using MVC_01.Menu
+@inject AdminSidebarService _AdminSidebarService 
 @{
     ViewData["Title"] = "Sửa đổi chuyên mục";
-   // Layout="/Views/Shared/_LayoutAdmin.cshtml";
+    Layout="/Views/Shared/_LayoutAdmin.cshtml";
 
 }
-
 
 <hr />
 <div class="row">
@@ -49,11 +48,11 @@
     var summernote = new Summernote("#Description");
 }
 <partial name="_Summernote" model="@summernote"></partial>
-@* @{
+@{
     _AdminSidebarService.SetActive("Category", "Create", "Blog");
 }
 
 @section Sidebar
 {
     @Html.Raw(_AdminSidebarService.renderHtml())
-} *@
+}

@@ -21,6 +21,7 @@ namespace MVC_01
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    //webBuilder.UseUrls("http://0.0.0.0:8090");
                     webBuilder.UseStartup<Startup>();
                 });
                 

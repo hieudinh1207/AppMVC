@@ -104,6 +104,43 @@ namespace MVC_01.Menu {
                         },                                   
                     },
                 });
+                Items.Add(new SidebarItem() { Type = SidebarItemType.Divider});
+                Items.Add(new SidebarItem() { 
+                    Type = SidebarItemType.NavItem,
+                    Title = "Quản lý sản phẩm",
+                    AwesomeIcon = "far fa-folder",
+                    collapseID = "product",
+                    Items = new List<SidebarItem>() {
+                        new SidebarItem() { 
+                                Type = SidebarItemType.NavItem,
+                                Controller = "CategoryProduct",
+                                Action = "Index", 
+                                Area = "Product",
+                                Title = "Các chuyên mục"                        
+                        },
+                         new SidebarItem() { 
+                                Type = SidebarItemType.NavItem,
+                                Controller = "CategoryProduct",
+                                Action = "Create", 
+                                Area = "Product",
+                                Title = "Tạo chuyên mục"                        
+                        },   
+                        new SidebarItem() { 
+                                Type = SidebarItemType.NavItem,
+                                Controller = "ProductManage",
+                                Action = "Index", 
+                                Area = "Product",
+                                Title = "Các sản phẩm"                        
+                        }, 
+                        new SidebarItem() { 
+                                Type = SidebarItemType.NavItem,
+                                Controller = "ProductManage",
+                                Action = "Create", 
+                                Area = "Product",
+                                Title = "Tạo sản phẩm"                        
+                        },                                   
+                    },
+                });
               
 
         }

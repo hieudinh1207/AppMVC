@@ -3,7 +3,7 @@
 @inject AdminSidebarService _AdminSidebarService
 @{
     ViewData["Title"] = "Xóa sản phẩm";
-    //Layout="/Views/Shared/_LayoutAdmin.cshtml";
+    Layout="/Views/Shared/_LayoutAdmin.cshtml";
 
 }
 
@@ -27,11 +27,11 @@
         <a asp-action="Index">Danh sách sản phẩm</a>
     </form>
 </div>
-@* @{
+@{
     _AdminSidebarService.SetActive("Post", "Create", "Blog");
 }
 
 @section Sidebar
 {
     @Html.Raw(_AdminSidebarService.renderHtml())
-} *@
+}
